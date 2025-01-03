@@ -55,6 +55,14 @@ export default function NewPhoto() {
         }
     }
 
+    // const handlePhotoSubmit = async () => {
+    //     try {
+    //         fetch()
+    //     } catch() {
+    //
+    //     }
+    // }
+
     // useEffect(() => {
     //     console.log(photo);
     // }, [photo]);
@@ -88,12 +96,15 @@ export default function NewPhoto() {
                     .map((property, index) => (
                         <PhotoInput name={property} value={photo} setValue={setPhoto} key={index}/>
                     ))}
-                {fileUploaded &&
+                <div style={{
+                    opacity: fileUploaded ? 1 : 0.5,
+                    pointerEvents: fileUploaded ? "auto" : "none"
+                }}>
                     <SubmitButton
                         onClick={() => null}
                         value={"Submit Photo"}
                     />
-                }
+                </div>
 
             </form>
         </div>
