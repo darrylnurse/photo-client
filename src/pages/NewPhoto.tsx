@@ -1,14 +1,15 @@
 import PhotoInput from "../components/PhotoInput.tsx";
-import {useEffect, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import getCurrentDate from "../helpers/GetCurrentDate.ts";
 import s3Upload from "../helpers/UploadS3.ts";
+import {IPhoto, TAllowedFileTypes} from "../types/Types.ts";
 
-export default function NewPhoto() {
+export default function NewPhoto() : ReactNode {
 
-    const currentDate = getCurrentDate();
+    const currentDate: string = getCurrentDate();
 
-    const [photo, setPhoto] = useState({
+    const [photo, setPhoto] = useState<IPhoto>({
         date_added: currentDate,
         url: "",
         title: "",
@@ -21,17 +22,16 @@ export default function NewPhoto() {
         iso: 0
     });
     const [filePath, setFilePath] = useState<string | null>(null);
-    const [imageFile, setFile] = useState(null);
-    const [fileUploaded, setFileUploaded] = useState(false);
-    const [uploadedUrl, setUploadedUrl] = useState("");
+    const [imageFile, setFile] = useState<File>(null);
+    const [fileUploaded, setFileUploaded] = useState<boolean>(false);
 
-    const handleFile = (event) => {
+    const handleFile = (event): void => {
         URL.revokeObjectURL(filePath || "");
-        const file = event.target.files[0];
-        const allowedTypes = ["image/png", "image/jpg", "image/jpeg"];
+        const file : File= event.target.files[0];
+        const allowedTypes: TAllowedFileTypes[] = ["image/png", "image/jpg", "image/jpeg"];
 
-        if(!file || !allowedTypes.includes(file.type)) {
-            alert("Please upload only JPEG or PNG files.")
+        if(!file || !allowedTypes.includes(file.type as TAllowedFileTypes)) {
+            alert("Please upload only JPEG or PNG files.");
             setFilePath(null);
             event.target.value = "";
             return;
@@ -44,27 +44,51 @@ export default function NewPhoto() {
     const handleImageUpload = async (event) => {
         event.preventDefault();
 
-        const result = await s3Upload(imageFile, imageFile.name, imageFile.type);
+        const result : string = await s3Upload(imageFile, imageFile.name, imageFile.type);
         if(result.length > 0) {
-            setUploadedUrl(result);
             setFileUploaded(true);
-            setPhoto((prev) => ({
+            setPhoto((prev: IPhoto) => ({
                 ...prev,
                 url: result
             }))
         }
     }
 
-    // const handlePhotoSubmit = async () => {
-    //     try {
-    //         fetch()
-    //     } catch() {
-    //
-    //     }
-    // }
+    const handlePhotoSubmit = async (event) => {
+
+        event.preventDefault();
+
+        Object.keys(photo).forEach((property : string) : void => {
+            if(!photo[property]) {
+                alert("Please fill out all fields.");
+                return;
+            }
+        })
+
+        const params : RequestInit = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(photo)
+        };
+        const serverUrl = import.meta.env.VITE_SERVER_URL;
+        const newPhotoUrl = serverUrl + "/photos";
+
+        try {
+            const result = await fetch(newPhotoUrl, params);
+            if(!result.ok) {
+                return new Error("Error adding photo.");
+            } else {
+                // show success page here; route "/"
+                console.log("Added successfully!");
+            }
+        } catch(error) {
+            console.error(error);
+        }
+    }
+    const hiddenProperties = ["date_added"];
 
     // useEffect(() => {
-    //     console.log(photo);
+    //     console.log(photo)
     // }, [photo]);
 
     return (
@@ -92,20 +116,19 @@ export default function NewPhoto() {
 
             <form className={"flex justify-center items-center flex-col gap-2"}>
                 {Object.keys(photo)
-                    .filter((property) => property !== "date_added")
-                    .map((property, index) => (
+                    .filter((property: string): boolean => (!hiddenProperties.includes(property)))
+                    .map((property: string, index: number) => (
                         <PhotoInput name={property} value={photo} setValue={setPhoto} key={index}/>
                     ))}
                 <div style={{
                     opacity: fileUploaded ? 1 : 0.5,
-                    pointerEvents: fileUploaded ? "auto" : "none"
+                    pointerEvents: fileUploaded ? "auto" : "none",
                 }}>
                     <SubmitButton
-                        onClick={() => null}
+                        onClick={handlePhotoSubmit}
                         value={"Submit Photo"}
                     />
                 </div>
-
             </form>
         </div>
 

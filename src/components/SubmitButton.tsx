@@ -1,4 +1,6 @@
-export default function SubmitButton({ onClick, value}) {
+import {ReactNode} from "react";
+
+export default function SubmitButton({ onClick, value}) : ReactNode {
     return (
         <button
             type={"submit"}

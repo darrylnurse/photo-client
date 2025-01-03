@@ -1,9 +1,11 @@
-export default function PhotoInput({ name, value, setValue }) {
+import {ReactNode} from "react";
 
+export default function PhotoInput({ name, value, setValue }) : ReactNode {
     const handleChange = (event) => {
+        const { value } = event.target;
         setValue((prev) => ({
             ...prev,
-            [name]: event.target.value
+            [name]: name === "iso" ? parseInt(value) : value
         }))
     }
     
