@@ -1,15 +1,15 @@
 import PhotoInput from "../components/PhotoInput.tsx";
-import {ReactNode, useEffect, useState} from "react";
+import {ReactNode, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import getCurrentDate from "../helpers/GetCurrentDate.ts";
 import s3Upload from "../helpers/UploadS3.ts";
-import {IPhoto, TAllowedFileTypes} from "../types/Types.ts";
+import {INewPhoto, TAllowedFileTypes} from "../types/Types.ts";
 
 export default function NewPhoto() : ReactNode {
 
     const currentDate: string = getCurrentDate();
 
-    const [photo, setPhoto] = useState<IPhoto>({
+    const [photo, setPhoto] = useState<INewPhoto>({
         date_added: currentDate,
         url: "",
         title: "",
@@ -47,7 +47,7 @@ export default function NewPhoto() : ReactNode {
         const result : string = await s3Upload(imageFile, imageFile.name, imageFile.type);
         if(result.length > 0) {
             setFileUploaded(true);
-            setPhoto((prev: IPhoto) => ({
+            setPhoto((prev: INewPhoto) => ({
                 ...prev,
                 url: result
             }))
@@ -91,8 +91,10 @@ export default function NewPhoto() : ReactNode {
     //     console.log(photo)
     // }, [photo]);
 
+
+    // could show preview of new photo!!!
     return (
-        <div className={"flex flex-row gap-2"}>
+        <div className={"flex flex-row gap-2 w-full bg-emerald-300 justify-center items-center"}>
             <form className={"flex justify-center flex-col items-center gap-2"}>
                 <img
                     alt={"uploaded-image"}
