@@ -1,21 +1,18 @@
-export interface IHomePhoto {
+export interface IBasePhoto {
     url: string,
     title: string,
     date_taken: string,
     location: string,
-    camera: string,
+    slug: string,
 }
 
-export interface INewPhoto extends IHomePhoto{
+export interface IPhoto extends IBasePhoto {
+    camera: string,
     date_added: string,
     focal_length: string,
     aperture: string,
     shutter_speed: string,
     iso: number
-}
-
-export interface IRawPhoto extends INewPhoto {
-    slug: string,
 }
 
 export type TAllowedFileTypes = "image/png" | "image/jpg" | "image/jpeg";

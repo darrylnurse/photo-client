@@ -5,6 +5,7 @@ import Root from './Root.tsx'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import NewPhoto from "./pages/NewPhoto.tsx";
 import Home from "./pages/Home.tsx";
+import PhotoDetails from "./pages/PhotoDetails.tsx";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: "new-photo",
                 element: <NewPhoto/>
+            },
+            {
+                path: "photo-details/:slug",
+                element: <PhotoDetails/>
             }
         ]
     }

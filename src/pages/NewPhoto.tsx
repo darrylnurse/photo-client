@@ -3,13 +3,13 @@ import {ReactNode, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import getCurrentDate from "../helpers/GetCurrentDate.ts";
 import s3Upload from "../helpers/UploadS3.ts";
-import {INewPhoto, TAllowedFileTypes} from "../types/Types.ts";
+import {IPhoto, TAllowedFileTypes} from "../types/Types.ts";
 
 export default function NewPhoto() : ReactNode {
 
     const currentDate: string = getCurrentDate();
 
-    const [photo, setPhoto] = useState<INewPhoto>({
+    const [photo, setPhoto] = useState<IPhoto>({
         date_added: currentDate,
         url: "",
         title: "",
@@ -47,7 +47,7 @@ export default function NewPhoto() : ReactNode {
         const result : string = await s3Upload(imageFile, imageFile.name, imageFile.type);
         if(result.length > 0) {
             setFileUploaded(true);
-            setPhoto((prev: INewPhoto) => ({
+            setPhoto((prev: IPhoto) => ({
                 ...prev,
                 url: result
             }))
