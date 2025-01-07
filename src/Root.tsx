@@ -1,4 +1,5 @@
 import {Outlet, useNavigate} from "react-router";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function Root() {
 
@@ -16,7 +17,7 @@ function Root() {
         <div className={"min-h-screen"}>
             <header className={"page-header h-[15vh] grid grid-cols-5 w-full text-center items-center"}>
                 <h1 className={"h-full flex justify-center items-center font-bold text-3xl cursor-pointer tracking-[0.1rem]"} onClick={() => navigate('/')}>
-                    <img
+                    <LazyLoadImage
                         src={"/photo-logo.svg"}
                         alt={"photo-logo"}
                         className={"photo-logo h-[4rem]"}

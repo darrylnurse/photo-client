@@ -1,6 +1,7 @@
 import {ReactNode, useEffect, useRef, useState} from "react";
 import {IBasePhoto} from "../types/Types.ts";
 import PhotoCard from "../components/PhotoCard.tsx";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 export default function Home() : ReactNode {
 
@@ -57,18 +58,11 @@ export default function Home() : ReactNode {
         <div
             className={"w-full relative"}
         >
-            <div
-                style={{
-                    backgroundImage: `url(${recentUrl})`,
-                    backgroundColor: "black",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    filter: "blur(1rem) brightness(50%)"
-                }}
-                className={"w-full h-full absolute z-[1]"}
-            >
-            </div>
+            <LazyLoadImage
+                src={recentUrl}
+                alt={"main-background"}
+                className={"w-full main-background h-full absolute z-[1]"}
+            />
             <div className={"p-8 relative grid grid-cols-3 z-[1] w-full"}>
                 <div className={"flex items-center"}>
                     <div
@@ -81,7 +75,7 @@ export default function Home() : ReactNode {
                             setSearchValue("")
                         }}
                     >
-                        <img
+                        <LazyLoadImage
                             src={"/search.svg"}
                             className={`${searchClickedOnce ? (searchVisible ? "search-spin-left" : "search-spin-right") : ""} h-[2rem] cursor-pointer hover:scale-[105%] active:scale-[95%]`}
                             alt={"clear-search"}
