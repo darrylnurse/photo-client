@@ -6,23 +6,28 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import NewPhoto from "./pages/NewPhoto.tsx";
 import Home from "./pages/Home.tsx";
 import PhotoDetails from "./pages/PhotoDetails.tsx";
+import GeneralError from "./pages/GeneralError.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root/>,
+        errorElement: <GeneralError/>,
         children: [
             {
                 index: true,
-                element: <Home/>
+                element: <Home/>,
+                errorElement: <GeneralError/>
             },
             {
                 path: "new-photo",
-                element: <NewPhoto/>
+                element: <NewPhoto/>,
+                errorElement: <GeneralError/>
             },
             {
                 path: "photo-details/:slug",
-                element: <PhotoDetails/>
+                element: <PhotoDetails/>,
+                errorElement: <GeneralError/>
             }
         ]
     }

@@ -17,8 +17,8 @@ export default function PhotoInput({ name, value, setValue }) : ReactNode {
     }
 
     return (
-        <div className={"flex justify-center flex-col items-center"}>
-            <label htmlFor={name}>
+        <div className={"flex gap-5 flex-row items-center w-full"}>
+            <label htmlFor={name} className={"font-bold text-2xl justify-self-start"}>
                 {formalizeName(String(name) || "")}
             </label>
             {name === "iso" ? (
@@ -28,7 +28,7 @@ export default function PhotoInput({ name, value, setValue }) : ReactNode {
                     name={name}
                     value={value[name]}
                     onChange={handleChange}
-                    className={"p-2 rounded-md"}
+                    className={"light-inner-shadow p-2 rounded-md justify-self-stretch flex-1"}
                     autoComplete={"off"}
                 />
             ) : (
@@ -37,7 +37,7 @@ export default function PhotoInput({ name, value, setValue }) : ReactNode {
                     name={name}
                     value={value[name]}
                     onChange={handleChange}
-                    className={"p-2 rounded-md"}
+                    className={"light-inner-shadow p-2 rounded-md justify-self-stretch flex-1"}
                     autoComplete={"off"}
                 />
             )}

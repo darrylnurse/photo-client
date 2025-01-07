@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.image-box {
-    box-shadow: 18px 1px 19px -2px rgba(0,0,0,1);
+.page-header {
+    box-shadow: inset 0 3px 12px 0 rgba(0,0,0,0.55);
 }
 
-.hover-letter:hover {
-    transform: translateY(-7.5px);
+.image-box {
+    /*box-shadow: 0 1px 10px 4px rgba(0,0,0,1);*/
+}
+
+.details-box {
+    box-shadow: inset 0 1px 10px 4px rgba(0,0,0,1);
 }
 
 @keyframes photo-jump {
@@ -15,6 +19,10 @@
     25% {transform: translateY(-1rem) rotate(0)}
     50% {transform: translateY(-1rem) rotate(-360deg)}
     100% {transform: translateY(0rem) rotate(-360deg)}
+}
+
+.photo-card {
+    transition: transform ease 0.5s;
 }
 
 .photo-logo {
@@ -27,10 +35,63 @@
     animation-timing-function: ease-in;
 }
 
-.photo-outer-shadow {
-    box-shadow: 6px 10px 49px -8px rgba(0,0,0,1);
-}
-
 .photo-inner-shadow {
     box-shadow: inset 0 0 10px black;
+}
+
+.light-inner-shadow {
+    box-shadow: inset 0 0 5px black;
+}
+
+@keyframes search-spin-right {
+    0% {transform: rotate(0)}
+    100% {transform: rotate(-360deg)}
+}
+
+@keyframes search-spin-left {
+    0% {transform: rotate(0)}
+    100% {transform: rotate(360deg)}
+}
+
+.search-spin-left,
+.search-spin-right {
+    animation-iteration-count: 1;
+    animation-duration: 0.75s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.search-spin-left {
+    animation-name: search-spin-left;
+}
+
+.search-spin-right {
+    animation-name: search-spin-right;
+}
+
+@keyframes search-box-left {
+    0% {left: 0;}
+    100% {left: 50%;}
+}
+
+@keyframes search-box-right {
+    0% {left: 50%;}
+    100% {left: 0;}
+}
+
+.search-box-left,
+.search-box-right {
+    animation-iteration-count: 1;
+    animation-duration: 0.75s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform: translate(-50%);
+}
+
+.search-box-left {
+    animation-name: search-box-left;
+}
+
+.search-box-right {
+    animation-name: search-box-right;
 }

@@ -89,16 +89,21 @@ export default function NewPhoto() : ReactNode {
         }
     }
     const hiddenProperties = ["date_added"];
+    const recentUrl = localStorage.getItem("lastVisitedPhoto");
 
-    // useEffect(() => {
-    //     console.log(photo)
-    // }, [photo]);
-
-
-    // could show preview of new photo!!!
+    // could show preview of new photo (photo-card component)!!!
     return (
-        <div className={"flex flex-row gap-2 w-full bg-emerald-300 justify-center items-center"}>
-            <form className={"flex justify-center flex-col items-center gap-2"}>
+        <div
+            className={"flex flex-row gap-[12rem] w-full bg-emerald-300 justify-center items-center"}
+            style={{
+                backgroundImage: `url(${recentUrl})`,
+                backgroundColor: "black",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+            }}
+        >
+            <form className={"light-inner-shadow flex justify-center flex-col items-center bg-gray-100 rounded-md p-6 gap-4"}>
                 <img
                     alt={"uploaded-image"}
                     src={filePath || "./default.svg"}
@@ -106,6 +111,7 @@ export default function NewPhoto() : ReactNode {
                 />
                 <label
                     htmlFor={"image"}
+                    className={"font-bold text-2xl"}
                 >Upload Image</label>
                 <input
                     type={"file"}
@@ -119,16 +125,18 @@ export default function NewPhoto() : ReactNode {
                 />
             </form>
 
-            <form className={"flex justify-center items-center flex-col gap-2"}>
+            <form className={"light-inner-shadow flex justify-center items-start flex-col gap-4 bg-gray-100 rounded-md p-6"}>
                 {Object.keys(photo)
                     .filter((property: string): boolean => (!hiddenProperties.includes(property)))
                     .map((property: string, index: number) => (
                         <PhotoInput name={property} value={photo} setValue={setPhoto} key={index}/>
-                    ))}
+                ))}
                 <div style={{
-                    opacity: fileUploaded ? 1 : 0.5,
-                    pointerEvents: fileUploaded ? "auto" : "none",
-                }}>
+                        opacity: fileUploaded ? 1 : 0.5,
+                        pointerEvents: fileUploaded ? "auto" : "none",
+                    }}
+                     className={"self-center mt-5"}
+                >
                     <SubmitButton
                         onClick={handlePhotoSubmit}
                         value={"Submit Photo"}

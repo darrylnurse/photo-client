@@ -37,30 +37,30 @@ export default function PhotoDetails() {
     return (
         photo ? (
         <div className={" w-full flex flex-row relative"}>
-            <div className={"image-box w-[60%] relative z-[1] flex p-16 items-center justify-center"}>
+            <div className={"image-box w-[60%] h-full relative z-[1] flex p-16 items-center justify-center"}>
                 <img
                     src={photo.url}
                     alt={photo.slug}
-                    className={"border-[0.75rem] border-amber-400"}
+                    className={"rounded-md h-[35rem]"}
                     draggable={false}
-                    style={{
-                        borderStyle: "groove"
-                    }}
+                    // style={{
+                    //     border: "0.5rem groove yellow",
+                    // }}
                 />
             </div>
             <div
-                className={"w-[40%] p-4 flex relative items-center justify-center"}
+                className={"details-box w-[40%] p-4 flex relative items-center justify-center"}
                 style={{
                     backgroundImage: `url(${photo.url})`,
                     backgroundColor: "white",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    backgroundBlendMode: "difference"
+                    backgroundBlendMode: "difference",
                 }}
             >
                 <div
                     style={{
-                        backdropFilter: "invert(100%) brightness(50%)"
+                        backdropFilter: "invert(100%) brightness(40%)"
                     }}
                     className={"py-8 px-12 rounded-xl text-2xl text-white"}
                 >
@@ -76,8 +76,8 @@ export default function PhotoDetails() {
             </div>
         </div>
         ) : (
-            <div className={"w-full flex justify-center items-center text-3xl font-bold"}>
-                We couldn't find that picture!
+            <div className={"w-full flex justify-center items-center text-white text-3xl font-bold"}>
+                {/*We couldn't find that picture!*/}
             </div>
         )
     )
