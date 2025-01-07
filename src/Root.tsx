@@ -25,7 +25,7 @@ function Root() {
                     cameras
                 </nav>
                 <div className={"bg-amber-100 h-full flex justify-center items-center"}>
-                    admin
+                    <a href={"/new-photo"}>admin</a>
                 </div>
             </header>
             <div className={"min-h-[85vh] scroll-auto bg-black flex"}>

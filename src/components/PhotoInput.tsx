@@ -21,14 +21,26 @@ export default function PhotoInput({ name, value, setValue }) : ReactNode {
             <label htmlFor={name}>
                 {formalizeName(String(name) || "")}
             </label>
-            <input
-                type={"text"}
-                name={name}
-                value={value[name]}
-                onChange={handleChange}
-                className={"p-2 rounded-md"}
-                autoComplete={"off"}
-            />
+            {name === "iso" ? (
+                <input
+                    type={"number"}
+                    step={"100"}
+                    name={name}
+                    value={value[name]}
+                    onChange={handleChange}
+                    className={"p-2 rounded-md"}
+                    autoComplete={"off"}
+                />
+            ) : (
+                <input
+                    type={"text"}
+                    name={name}
+                    value={value[name]}
+                    onChange={handleChange}
+                    className={"p-2 rounded-md"}
+                    autoComplete={"off"}
+                />
+            )}
         </div>
     )
 }

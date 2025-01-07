@@ -42,16 +42,15 @@ export default function Home() : ReactNode {
             <div
                 style={{
                     backgroundImage: `url(${recentUrl})`,
-                    backgroundColor: "white",
+                    backgroundColor: "black",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    backgroundBlendMode: "difference",
                     filter: "blur(1rem)"
                 }}
                 className={"w-full h-full absolute z-[1]"}
             >
             </div>
-            <div className={"grid grid-cols-5 p-8 gap-8 relative z-[1]"}>
+            <div className={"grid grid-cols-5 p-[5rem] gap-6 relative z-[1]"}>
                 {photos && (photos.length >= 1 ?
                         photos.map((photo) => (
                             <PhotoCard
