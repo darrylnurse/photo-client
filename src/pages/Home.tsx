@@ -23,7 +23,6 @@ export default function Home() : ReactNode {
             const result = await fetch(homeUrl, params);
             if(result.ok) {
                 const data = await result.json();
-                console.log(data);
                 setPhotos(data["photos"]);
             }
         } catch(error) {
@@ -65,15 +64,16 @@ export default function Home() : ReactNode {
             />
             <div className={"p-8 relative grid grid-cols-3 z-[1] w-full"}>
                 <div className={"flex items-center"}>
-                    <div
+                    <button
                         className={"outline-white p-1"}
                         tabIndex={0}
                         onClick={() => {
                             setSearchVisible(!searchVisible)
-                            searchRef.current.focus()
+                            if(searchRef) searchRef.current.focus()
                             setSearchClickedOnce(true)
                             setSearchValue("")
                         }}
+                        type={"button"}
                     >
                         <LazyLoadImage
                             src={"/search.svg"}
@@ -81,7 +81,7 @@ export default function Home() : ReactNode {
                             alt={"clear-search"}
 
                         />
-                    </div>
+                    </button>
 
                 </div>
                 <div
@@ -96,11 +96,12 @@ export default function Home() : ReactNode {
                         onChange={handleSearch}
                         className={"p-2 rounded-lg"}
                         ref={searchRef}
+                        tabIndex={searchVisible ? 0 : -1}
                     />
                     <button
                         onClick={() => setSearchValue("")}
                         className={"cursor-pointer outline-white p-1 hover:scale-[105%] active:scale-[95%]"}
-                        tabIndex={0}
+                        tabIndex={searchVisible ? 0 : -1}
                     >
                         <img
                             src={"/x.svg"}

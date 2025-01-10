@@ -1,6 +1,7 @@
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {IPhoto} from "../types/Types.ts";
+import resizeUrl from "../helpers/ResizeUrl.ts";
 
 export default function PhotoDetails() {
 
@@ -37,30 +38,23 @@ export default function PhotoDetails() {
     return (
         photo ? (
         <div className={" w-full flex flex-row relative"}>
-            <div className={"image-box w-[60%] h-full relative z-[1] flex p-16 items-center justify-center"}>
+            <div className={"image-box w-[60%] h-full relative z-[1] flex p-12 items-center justify-center"}>
                 <img
                     src={photo.url}
                     alt={photo.slug}
-                    className={"rounded-md h-[35rem]"}
+                    className={"rounded-md h-[40rem]"}
                     draggable={false}
-                    // style={{
-                    //     border: "0.5rem groove yellow",
-                    // }}
                 />
             </div>
             <div
-                className={"details-box w-[40%] p-4 flex relative items-center justify-center"}
+                className={`details-box w-[40%] bg-white p-4 flex bg-no-repeat bg-cover bg-blend-difference relative items-center justify-center`}
                 style={{
-                    backgroundImage: `url(${photo.url})`,
-                    backgroundColor: "white",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundBlendMode: "difference",
+                    backgroundImage: `url(${resizeUrl(photo.url)})`,
                 }}
             >
                 <div
                     style={{
-                        backdropFilter: "invert(100%) brightness(40%)"
+                        backdropFilter: "invert(100%) brightness(30%)"
                     }}
                     className={"py-8 px-12 rounded-xl text-2xl text-white"}
                 >

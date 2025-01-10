@@ -29,7 +29,9 @@ export default function NewPhoto() : ReactNode {
     const [fileUploaded, setFileUploaded] = useState<boolean>(false);
 
     const handleFile = (event): void => {
+        photo.url = "";
         URL.revokeObjectURL(filePath || "");
+
         const file : File= event.target.files[0];
         const allowedTypes: TAllowedFileTypes[] = ["image/png", "image/jpg", "image/jpeg"];
 
@@ -47,12 +49,12 @@ export default function NewPhoto() : ReactNode {
     const handleImageUpload = async (event) => {
         event.preventDefault();
 
-        const result : string = await s3Upload(imageFile, imageFile.name, imageFile.type);
-        if(result.length > 0) {
+        const { originalUrl } : string = await s3Upload(imageFile, imageFile.name, imageFile.type);
+        if(originalUrl.length > 0) {
             setFileUploaded(true);
             setPhoto((prev: INewPhoto) => ({
                 ...prev,
-                url: result
+                url: originalUrl
             }))
         }
     }
@@ -94,13 +96,9 @@ export default function NewPhoto() : ReactNode {
     // could show preview of new photo (photo-card component)!!!
     return (
         <div
-            className={"flex flex-row gap-[12rem] w-full bg-emerald-300 justify-center items-center"}
+            className={"flex flex-row gap-[12rem] bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
             style={{
                 backgroundImage: `url(${recentUrl})`,
-                backgroundColor: "black",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
             }}
         >
             <form className={"light-inner-shadow flex justify-center flex-col items-center bg-gray-100 rounded-md p-6 gap-4"}>
