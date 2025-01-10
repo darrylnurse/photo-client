@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 .page-header {
     box-shadow: inset 0 3px 12px 0 rgba(0,0,0,0.55);
 }
@@ -34,6 +38,7 @@
 
 .photo-card:focus {
     box-shadow: 0 0 10px white;
+    transform: translateY(-0.5rem);
 }
 .photo-card-image {
     object-position: center;
@@ -109,4 +114,13 @@
 
 .search-box-right {
     animation-name: search-box-right;
+}
+
+.pin {
+    transform-origin: top;
+}
+
+.sort-button:focus {
+    box-shadow: 0 0 20px white;
+    outline-color: white;
 }
