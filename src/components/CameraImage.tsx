@@ -5,10 +5,7 @@ export default function CameraImage({ url, name }) {
 
     const {currentCamera, setCurrentCamera} = useContext(CameraContext);
 
-    const [glowing, setGlowing] = useState(false);
-
     const handleCamera = () : void => {
-        setGlowing(!glowing);
         if(currentCamera === name) {
             setCurrentCamera("All");
         } else {
