@@ -1,9 +1,12 @@
-import {ReactNode, useEffect, useRef, useState} from "react";
+import {ReactNode, useContext, useEffect, useRef, useState} from "react";
 import {IBasePhoto} from "../types/Types.ts";
 import PhotoCard from "../components/PhotoCard.tsx";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {CameraContext} from "../Root.tsx";
 
 export default function Home() : ReactNode {
+
+    const { currentCamera } = useContext(CameraContext);
 
     const [photos, setPhotos] = useState<IBasePhoto[]>([]);
     const [searchValue, setSearchValue] = useState<string>("");
@@ -132,9 +135,10 @@ export default function Home() : ReactNode {
 
             </div>
             <div
-                className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 p-[5rem] pt-[1rem] gap-6 gap-y-12 relative z-[1]"}>
+                className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-[5rem] pt-[1rem] gap-6 gap-y-12 relative z-[1]"}>
                 {photos && (photos.length >= 1 ?
                         photos
+                            .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
                             .filter((photo) => photo.title.toLowerCase().includes(searchValue))
                             .sort((photo1, photo2) => {
                                 if(sortNewest) return new Date(photo2.date_taken) - new Date(photo1.date_taken);
@@ -145,17 +149,19 @@ export default function Home() : ReactNode {
                                     url={photo.url}
                                     title={photo.title}
                                     date_taken={photo.date_taken}
-                                        location={photo.location}
-                                        slug={photo.slug}
-                                        key={index}
-                                    />
-                                )
-                            ) :
-                        (
-                            <div className={"font-bold rounded-xl bg-gray-100 text-black text-3xl flex justify-center items-center col-span-full"}>
-                                {/*Gimme a minute. &lt;/3*/}
-                            </div>
-                        )
+                                    location={photo.location}
+                                    slug={photo.slug}
+                                    order={index}
+                                    key={index}
+                                    camera={photo.camera}
+                                />
+                            )
+                        ) :
+                    (
+                        <div className={"font-bold rounded-xl bg-gray-100 text-black text-3xl flex justify-center items-center col-span-full"}>
+                            {/*Gimme a minute. &lt;/3*/}
+                        </div>
+                    )
                 )}
             </div>
         </div>

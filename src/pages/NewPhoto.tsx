@@ -93,10 +93,9 @@ export default function NewPhoto() : ReactNode {
     const hiddenProperties = ["date_added"];
     const recentUrl = localStorage.getItem("lastVisitedPhoto");
 
-    // could show preview of new photo (photo-card component)!!!
     return (
         <div
-            className={"flex flex-row gap-[12rem] bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
+            className={"flex flex-row gap-[12rem] py-4 bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
             style={{
                 backgroundImage: `url(${recentUrl})`,
             }}

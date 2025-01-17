@@ -3,19 +3,19 @@ import {useNavigate} from "react-router";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import resizeUrl from "../helpers/ResizeUrl.ts";
 
-export default function PhotoCard( {url, title, date_taken, location, slug } : IBasePhoto) {
+export default function PhotoCard( {url, title, date_taken, location, slug, order } : IBasePhoto) {
     const navigate = useNavigate();
 
     const resizedUrl = resizeUrl(url);
 
     return (
         <button
-            className={"photo-card relative hover:translate-y-[-0.5rem] cursor-pointer overflow-hidden w-[300px] h-[400px] rounded-xl"}
+            className={`bg-black justify-self-center photo-card relative hover:translate-y-[-0.5rem] cursor-pointer overflow-hidden w-[300px] h-[400px] rounded-xl`}
             onClick={() => navigate(`photo-details/${slug}`)}
             tabIndex={0}
             type={"button"}
         >
-            <div className={"absolute w-full h-full pointer-events-none z-[1] photo-inner-shadow"}/>
+            <div className={`z-[1] absolute w-full h-full pointer-events-none photo-inner-shadow`}/>
             <LazyLoadImage
                 className={"photo-card-image h-[60%] w-full flex relative z-0 justify-center items-center"}
                 src={resizedUrl || "/default.svg"}

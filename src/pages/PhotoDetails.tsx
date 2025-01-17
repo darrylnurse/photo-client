@@ -13,7 +13,7 @@ export default function PhotoDetails() {
         headers: {"Content-Type": "application/json"}
     };
 
-    const [photo, setPhoto] = useState<IPhoto>(null)
+    const [photo, setPhoto] = useState<IPhoto>(null);
     const fetchPhotos = async () => {
         try {
             const result = await fetch(newPhotoUrl, params);

@@ -4,10 +4,10 @@ export interface IBasePhoto {
     date_taken: string,
     location: string,
     slug: string,
+    camera: string,
 }
 
 export interface IPhoto extends IBasePhoto {
-    camera: string,
     date_added: string,
     focal_length: string,
     aperture: string,
