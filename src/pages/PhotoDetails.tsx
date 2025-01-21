@@ -42,7 +42,7 @@ export default function PhotoDetails() {
                 <img
                     src={photo.url}
                     alt={photo.slug}
-                    className={"rounded-md h-[40rem]"}
+                    className={"rounded-md w-full"}
                     draggable={false}
                 />
             </div>

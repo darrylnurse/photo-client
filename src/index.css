@@ -128,3 +128,9 @@ html {
 .camera-glow {
     filter: drop-shadow(0px 0px 5px black);
 }
+
+.form-backdrop {
+    backdrop-filter: blur(50%);
+}
+
+

@@ -7,6 +7,7 @@ import NewPhoto from "./pages/NewPhoto.tsx";
 import Home from "./pages/Home.tsx";
 import PhotoDetails from "./pages/PhotoDetails.tsx";
 import GeneralError from "./pages/GeneralError.tsx";
+import AdminLogin from "./pages/AdminLogin.tsx";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
             {
                 path: "photo-details/:slug",
                 element: <PhotoDetails/>,
+                errorElement: <GeneralError/>
+            },
+            {
+                path: "login",
+                element: <AdminLogin/>,
                 errorElement: <GeneralError/>
             }
         ]

@@ -136,33 +136,26 @@ export default function Home() : ReactNode {
             </div>
             <div
                 className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-[5rem] pt-[1rem] gap-6 gap-y-12 relative z-[1]"}>
-                {photos && (photos.length >= 1 ?
-                        photos
-                            .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
-                            .filter((photo) => photo.title.toLowerCase().includes(searchValue))
-                            .sort((photo1, photo2) => {
-                                if(sortNewest) return new Date(photo2.date_taken) - new Date(photo1.date_taken);
-                                else return new Date(photo1.date_taken) - new Date(photo2.date_taken);
-                            })
-                            .map((photo, index) => (
-                                <PhotoCard
-                                    url={photo.url}
-                                    title={photo.title}
-                                    date_taken={photo.date_taken}
-                                    location={photo.location}
-                                    slug={photo.slug}
-                                    order={index}
-                                    key={index}
-                                    camera={photo.camera}
-                                />
-                            )
-                        ) :
-                    (
-                        <div className={"font-bold rounded-xl bg-gray-100 text-black text-3xl flex justify-center items-center col-span-full"}>
-                            {/*Gimme a minute. &lt;/3*/}
-                        </div>
-                    )
-                )}
+                {photos && photos
+                    .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
+                    .filter((photo) => photo.title.toLowerCase().includes(searchValue))
+                    .sort((photo1, photo2) => {
+                        if(sortNewest) return new Date(photo2.date_taken) - new Date(photo1.date_taken);
+                        else return new Date(photo1.date_taken) - new Date(photo2.date_taken);
+                    })
+                    .map((photo, index) => (
+                        <PhotoCard
+                            url={photo.url}
+                            title={photo.title}
+                            date_taken={photo.date_taken}
+                            location={photo.location}
+                            slug={photo.slug}
+                            order={index}
+                            key={index}
+                            camera={photo.camera}
+                        />
+                    ))
+                }
             </div>
         </div>
     )
