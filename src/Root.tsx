@@ -58,8 +58,9 @@ function Root() {
         <CameraContext.Provider value={{currentCamera, setCurrentCamera}}>
             <AuthContext.Provider value={{authorized, setAuthorized}}>
                 <div className={"min-h-screen w-full"}>
-                    <header className={"page-header h-[15vh] grid grid-cols-5 w-full p-3 text-center items-center"}>
-                        <div className={"h-full flex justify-center items-center"}>
+                    <header className={"page-header h-[15vh] grid grid-cols-2 md:grid-cols-5 w-full p-3 text-center items-center"}>
+
+                        <div className={"h-full flex justify-start md:justify-center items-center"}>
                             <button
                                 onClick={() => {
                                     navigate('/');
@@ -75,15 +76,28 @@ function Root() {
                                     className={"photo-logo h-[1rem] lg:h-[2rem]"}
                                 />
                                 <div className={"tracking-[0.1rem] font-bold text-md lg:text-3xl text-nowrap"}>
-                                    {Array.from(headerString).map((char, index) => (
-                                        <div key={index} className={"hover:translate-y-[-5px] inline-block transition-transform"}>
-                                            {char}
-                                        </div>
-                                    ))}
+                                    {Array.from(headerString).map((char, index) => {
+                                        if(char === 'A') return (
+                                            <a href={authorized ? "/new-photo" : "/login"}
+                                               tabIndex={-1} key={index}
+                                               className={"hover:translate-y-[-5px] outline-none hover:text-emerald-400 inline-block transition-all"}
+                                            >
+                                                {char}
+                                            </a>
+
+                                        );
+
+                                        else return (
+                                            <div key={index} className={"hover:translate-y-[-5px] inline-block transition-transform"}>
+                                                {char}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </button>
                         </div>
-                        <nav className={"col-span-3 h-full text-sm flex gap-[3rem] justify-center items-center"}>
+
+                        <nav className={"col-span-1 md:col-span-3 h-full text-sm flex gap-[0.5rem] md:gap-[3rem] justify-start md:justify-center items-center"}>
                             {cameras && cameras.map(({ camera }, index) => {
                                return (
                                    <CameraImage
@@ -94,9 +108,10 @@ function Root() {
                                )
                             })}
                         </nav>
-                        <div className={"h-full flex justify-center items-center"}>
-                            <a href={authorized ? "/new-photo" : "/login"} className={"font-bold text-md lg:text-2xl px-1"}>ADMIN</a>
-                        </div>
+
+                        {/*<div className={"h-full flex justify-center items-center"}>*/}
+                        {/*    <a href={authorized ? "/new-photo" : "/login"} className={"font-bold text-md lg:text-2xl px-1"}>ADMIN</a>*/}
+                        {/*</div>*/}
                     </header>
                     <div className={"min-h-[85vh] scroll-auto bg-black flex"}>
                         <Outlet/>

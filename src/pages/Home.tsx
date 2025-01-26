@@ -89,7 +89,7 @@ export default function Home() : ReactNode {
                 </div>
 
                 <div
-                    className={`${searchVisible ? "" : "pointer-events-none"} ${searchVisible ? "search-box-left" : "search-box-right"} absolute top-[2.5rem] flex gap-3 items-center`}
+                    className={`justify-center ${searchVisible ? "" : "pointer-events-none"} ${searchVisible ? "search-box-left" : "search-box-right"} absolute top-[2.5rem] flex gap-3 items-center`}
                     style={{
                         opacity: searchVisible ? 1 : 0,
                         transition: "opacity ease 0.75s"
@@ -98,7 +98,7 @@ export default function Home() : ReactNode {
                     <input
                         value={searchValue}
                         onChange={handleSearch}
-                        className={"p-2 rounded-lg sort-button outline-white"}
+                        className={"px-1 lg:px-2 py-2 w-1/2 lg:w-full rounded-lg sort-button outline-white"}
                         ref={searchRef}
                         tabIndex={searchVisible ? 0 : -1}
                     />
@@ -135,7 +135,7 @@ export default function Home() : ReactNode {
 
             </div>
             <div
-                className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-[5rem] pt-[1rem] gap-6 gap-y-12 relative z-[1]"}>
+                className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-[8rem] lg:p-[5rem] pt-[1rem] gap-x-0 lg:gap-x-6 gap-y-12 relative z-[1]"}>
                 {photos && photos
                     .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
                     .filter((photo) => photo.title.toLowerCase().includes(searchValue))

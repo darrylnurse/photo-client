@@ -5,6 +5,7 @@ import getCurrentDate from "../helpers/GetCurrentDate.ts";
 import s3Upload from "../helpers/UploadS3.ts";
 import {INewPhoto, TAllowedFileTypes} from "../types/Types.ts";
 import {useNavigate} from "react-router";
+import exifr from 'exifr'
 
 export default function NewPhoto() : ReactNode {
 
@@ -28,11 +29,68 @@ export default function NewPhoto() : ReactNode {
     const [imageFile, setFile] = useState<File>(null);
     const [fileUploaded, setFileUploaded] = useState<boolean>(false);
 
-    const handleFile = (event): void => {
-        photo.url = "";
+    const isImageLoaded = (file) => {
+        return new Promise((resolve, reject) => {
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => resolve(true);
+                reader.onerror = () => reject(false);
+                reader.readAsDataURL(file);
+            } else {
+                reject(false);
+            }
+        });
+    };
+
+    const decimalToFraction = (decimal) => {
+        if(!decimal) return "1/1";
+        return `1/${100 / (Number(decimal) * 100)}`
+    }
+
+    const parseCamera = (rawName) => {
+        const commaIndex = rawName.indexOf(',');
+        return rawName.slice(1, commaIndex);
+    }
+
+    const handleFile = async (event) => {
+        setPhoto((prev) => ({
+            ...prev,
+            url: "",
+            date_taken: "",
+            location: "",
+            camera: "",
+            focal_length: "",
+            aperture: "",
+            shutter_speed: "",
+            iso: 0
+        }));
+
         URL.revokeObjectURL(filePath || "");
 
-        const file : File= event.target.files[0];
+        const file = event.target.files[0];
+
+        try {
+            const loaded = await isImageLoaded(file);
+            if (loaded && (file.type === "image/jpeg" || file.type === "image.jpg")) {
+                exifr.parse(file)
+                    .then(metadata => {
+                        console.log(metadata)
+                        setPhoto((prev) => ({
+                            ...prev,
+                            camera: parseCamera(metadata.Model),
+                            focal_length: `${metadata.FocalLength}mm`,
+                            iso: metadata.ISO,
+                            shutter_speed: `${decimalToFraction(metadata.ExposureTime)} sec`,
+                            aperture: `f/${metadata.FNumber}`,
+                        }))
+                    })
+            } else {
+                console.log("File type not conducive to EXIF.")
+            }
+        } catch (err) {
+            console.error("Failed to load image:", err);
+        }
+
         const allowedTypes: TAllowedFileTypes[] = ["image/png", "image/jpg", "image/jpeg"];
 
         if(!file || !allowedTypes.includes(file.type as TAllowedFileTypes)) {
@@ -41,8 +99,8 @@ export default function NewPhoto() : ReactNode {
             event.target.value = "";
             return;
         }
-        const uploadedFile = URL.createObjectURL(file);
-        setFilePath(uploadedFile);
+        const fileObjectUrl = URL.createObjectURL(file);
+        setFilePath(fileObjectUrl);
         setFile(file);
     }
 
@@ -95,7 +153,7 @@ export default function NewPhoto() : ReactNode {
 
     return (
         <div
-            className={"flex flex-row gap-[12rem] py-4 bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
+            className={"flex flex-col lg:flex-row gap-[3rem] lg:gap-[12rem] py-[5rem] lg:py-[3rem] bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
             style={{
                 backgroundImage: `url(${recentUrl})`,
             }}
@@ -141,7 +199,6 @@ export default function NewPhoto() : ReactNode {
                 </div>
             </form>
         </div>
-
     )
 }
 
