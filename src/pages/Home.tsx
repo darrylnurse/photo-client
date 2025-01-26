@@ -140,8 +140,8 @@ export default function Home() : ReactNode {
                     .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
                     .filter((photo) => photo.title.toLowerCase().includes(searchValue))
                     .sort((photo1, photo2) => {
-                        if(sortNewest) return new Date(photo2.date_taken) - new Date(photo1.date_taken);
-                        else return new Date(photo1.date_taken) - new Date(photo2.date_taken);
+                        if(sortNewest) return Number(new Date(photo2.date_taken)) - Number(new Date(photo1.date_taken));
+                        else return Number(new Date(photo1.date_taken)) - Number(new Date(photo2.date_taken));
                     })
                     .map((photo, index) => (
                         <PhotoCard
@@ -150,7 +150,6 @@ export default function Home() : ReactNode {
                             date_taken={photo.date_taken}
                             location={photo.location}
                             slug={photo.slug}
-                            order={index}
                             key={index}
                             camera={photo.camera}
                         />

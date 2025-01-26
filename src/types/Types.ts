@@ -29,3 +29,8 @@ export interface INewPhoto {
 }
 
 export type TAllowedFileTypes = "image/png" | "image/jpg" | "image/jpeg";
+
+export interface IStateContext {
+    state: string,
+    stateSetter: () => null
+}

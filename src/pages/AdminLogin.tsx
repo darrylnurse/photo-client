@@ -11,7 +11,7 @@ const adminPass = import.meta.env.VITE_ADMIN_PASSWORD;
 export default function AdminLogin(): ReactNode {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {_, setAuthorized} = useContext(AuthContext);
+    const {authorized, setAuthorized} = useContext(AuthContext);
 
     const navigate = useNavigate();
 

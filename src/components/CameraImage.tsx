@@ -1,7 +1,8 @@
-import {CSSProperties, useContext, useState} from "react";
+import {CSSProperties, useContext} from "react";
 import {CameraContext} from "../Root.tsx";
+import {TCameraImageProps} from "../types/Props.ts";
 
-export default function CameraImage({ url, name }) {
+export default function CameraImage({ url, name }: TCameraImageProps) {
 
     const {currentCamera, setCurrentCamera} = useContext(CameraContext);
 

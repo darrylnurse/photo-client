@@ -75,7 +75,7 @@ export default async function s3Upload(file, fileName, fileType) {
     }
 }
 
-async function resizeImage(file) {
+async function resizeImage(file): Promise<Blob> {
     return new Promise((resolve, reject) => {
         const img = new Image();
         const reader = new FileReader();
@@ -98,7 +98,7 @@ async function resizeImage(file) {
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            canvas.toBlob((blob) => {
+            canvas.toBlob((blob: Blob) => {
                 if(blob) resolve(blob);
                 else reject(new Error("Failed to create image blob from canvas."));
             }, file.type, 0.7);

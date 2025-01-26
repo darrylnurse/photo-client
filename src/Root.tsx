@@ -3,11 +3,21 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {createContext, useEffect, useState} from "react";
 import CameraImage from "./components/CameraImage.tsx";
 import getCameraImage from "./helpers/GetCameraImage.ts";
+import {ICameraContext, IAuthContext} from "./types/Contexts.ts";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const CameraContext = createContext({});
+export const CameraContext = createContext<ICameraContext>({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    currentCamera: "", setCurrentCamera(_value: ((prevState: string) => string) | string): void {
+    }
+});
 // eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext({});
+export const AuthContext = createContext<IAuthContext>({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    authorized: false, setAuthorized(_value: ((prevState: boolean) => boolean) | boolean): void {
+    }
+
+});
 
 function Root() {
 
@@ -43,10 +53,6 @@ function Root() {
     useEffect(() => {
         fetchCameras().catch((error) => console.error(error));
     }, []);
-
-    useEffect(() => {
-        console.log(currentCamera);
-    }, [currentCamera])
 
     return (
         <CameraContext.Provider value={{currentCamera, setCurrentCamera}}>

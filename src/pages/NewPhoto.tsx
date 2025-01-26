@@ -49,7 +49,7 @@ export default function NewPhoto() : ReactNode {
     const handleImageUpload = async (event) => {
         event.preventDefault();
 
-        const { originalUrl } : string = await s3Upload(imageFile, imageFile.name, imageFile.type);
+        const { originalUrl } = await s3Upload(imageFile, imageFile.name, imageFile.type);
         if(originalUrl.length > 0) {
             setFileUploaded(true);
             setPhoto((prev: INewPhoto) => ({
