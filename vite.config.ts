@@ -10,7 +10,7 @@ export default defineConfig({
       '/photos': {
         target: 'https://photoserver-q49m.onrender.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/photos/, ''), // Rewrite path if needed
+        rewrite: (path) => path.replace(/^\/photos/, ''),
       },
     },
   }

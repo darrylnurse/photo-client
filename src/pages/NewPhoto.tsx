@@ -48,8 +48,12 @@ export default function NewPhoto() : ReactNode {
     }
 
     const parseCamera = (rawName) => {
-        const commaIndex = rawName.indexOf(',');
-        return rawName.slice(1, commaIndex);
+        const parsedString = rawName.replace(/[<>]/g, "");
+        const commaIndex = parsedString.indexOf(',');
+        if (commaIndex === -1) {
+            return parsedString;
+        }
+        return parsedString.slice(0, commaIndex);
     }
 
     const handleFile = async (event) => {
