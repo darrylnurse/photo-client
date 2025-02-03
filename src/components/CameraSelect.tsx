@@ -16,6 +16,7 @@ export default function CameraSelect({ cameras }) {
             {cameras
                 ?
             <select
+                value={currentCamera}
                 name={"camera"}
                 className={"light-inner-shadow w-2/3 rounded-md text-center"}
                 onChange={handleSelect}
