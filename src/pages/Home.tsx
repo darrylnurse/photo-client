@@ -3,8 +3,6 @@ import {IBasePhoto} from "../types/Types.ts";
 import PhotoCard from "../components/PhotoCard.tsx";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {CameraContext} from "../Root.tsx";
-import useWindowDimensions from "../hooks/windowDimensions.tsx";
-import {TDimensions} from "../types/Window.ts";
 
 export default function Home() : ReactNode {
 
@@ -69,6 +67,7 @@ export default function Home() : ReactNode {
                 alt={"main-background"}
                 className={"w-full main-background h-full absolute z-[1]"}
             />
+
             <div className={"p-8 relative grid grid-cols-3 z-[1] w-full"}>
                 <div className={"flex items-center"}>
                     <button
@@ -136,8 +135,9 @@ export default function Home() : ReactNode {
                 </div>
 
             </div>
+
             <div
-                className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-[8rem] lg:p-[5rem] pt-[1rem] gap-x-0 lg:gap-x-6 gap-y-12 relative z-[1]"}>
+                className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-[8rem] lg:p-[5rem] pt-[1rem] lg:pt-[1rem] gap-x-0 lg:gap-x-6 gap-y-12 relative z-[1]"}>
                 {photos && photos
                     .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
                     .filter((photo) => photo.title.toLowerCase().includes(searchValue))
