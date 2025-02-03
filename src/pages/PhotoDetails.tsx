@@ -70,7 +70,7 @@ export default function PhotoDetails() {
                     }}
                     className={"py-8 px-12 rounded-xl text-2xl text-white"}
                 >
-                    <h1 className={"font-bold py-2 text-4xl"}>{photo.title}</h1>
+                    <h1 className={"font-bold py-2 text-4xl text"}>{photo.title}</h1>
                     <p>Taken In: {photo.location}</p>
                     <p>Taken On: {photo.date_taken}</p>
                     <p>Taken With: {photo.camera}</p>

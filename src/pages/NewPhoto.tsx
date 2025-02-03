@@ -6,6 +6,7 @@ import s3Upload from "../helpers/UploadS3.ts";
 import {INewPhoto, TAllowedFileTypes} from "../types/Types.ts";
 import {useNavigate} from "react-router";
 import exifr from 'exifr'
+import parseCamera from "../helpers/ParseCamera.ts";
 
 export default function NewPhoto() : ReactNode {
 
@@ -29,6 +30,7 @@ export default function NewPhoto() : ReactNode {
     const [imageFile, setFile] = useState<File>(null);
     const [fileUploaded, setFileUploaded] = useState<boolean>(false);
 
+    // lets put more of these functions in helpers
     const isImageLoaded = (file) => {
         return new Promise((resolve, reject) => {
             if (file) {
@@ -45,15 +47,6 @@ export default function NewPhoto() : ReactNode {
     const decimalToFraction = (decimal) => {
         if(!decimal) return "1/1";
         return `1/${100 / (Number(decimal) * 100)}`
-    }
-
-    const parseCamera = (rawName) => {
-        const parsedString = rawName.replace(/[<>]/g, "");
-        const commaIndex = parsedString.indexOf(',');
-        if (commaIndex === -1) {
-            return parsedString;
-        }
-        return parsedString.slice(0, commaIndex);
     }
 
     const handleFile = async (event) => {
@@ -81,7 +74,7 @@ export default function NewPhoto() : ReactNode {
                         console.log(metadata)
                         setPhoto((prev) => ({
                             ...prev,
-                            camera: parseCamera(metadata.Model),
+                            camera: parseCamera(metadata.Make, metadata.Model),
                             focal_length: `${metadata.FocalLength}mm`,
                             iso: metadata.ISO,
                             shutter_speed: `${decimalToFraction(metadata.ExposureTime)} sec`,
