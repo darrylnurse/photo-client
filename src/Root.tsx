@@ -4,6 +4,10 @@ import {createContext, useEffect, useState} from "react";
 import CameraImage from "./components/CameraImage.tsx";
 import getCameraImage from "./helpers/GetCameraImage.ts";
 import {ICameraContext, IAuthContext} from "./types/Contexts.ts";
+import Constants from "./constants.ts";
+import CameraSelect from "./components/CameraSelect.tsx";
+import {TDimensions} from "./types/Window.ts";
+import useWindowDimensions from "./hooks/windowDimensions.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const CameraContext = createContext<ICameraContext>({
@@ -16,7 +20,6 @@ export const AuthContext = createContext<IAuthContext>({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     authorized: false, setAuthorized(_value: ((prevState: boolean) => boolean) | boolean): void {
     }
-
 });
 
 function Root() {
@@ -29,6 +32,8 @@ function Root() {
 
     const [cameras, setCameras] = useState([]);
 
+    const { width } : TDimensions = useWindowDimensions();
+
     const rootUrl = import.meta.env.VITE_SERVER_URL;
     const params : RequestInit = {
         method: "GET",
@@ -40,7 +45,7 @@ function Root() {
             const result = await fetch(rootUrl, params);
             if(!result.ok) {
                 // return div "server down";
-                console.log("Error getting photos.");
+                console.log("Error getting cameras!");
             } else {
                 const data = await result.json();
                 setCameras(data["cameras"]);
@@ -97,17 +102,21 @@ function Root() {
                             </button>
                         </div>
 
-                        <nav className={"col-span-1 md:col-span-3 h-full text-sm flex gap-[0.5rem] md:gap-[3rem] justify-start md:justify-center items-center"}>
-                            {cameras && cameras.map(({ camera }, index) => {
-                               return (
-                                   <CameraImage
-                                        url={getCameraImage(camera) || "/default.svg"}
-                                        name={camera}
-                                        key={index}
-                                   />
-                               )
-                            })}
-                        </nav>
+                        {width <= Constants.MEDIUM_SCREEN ?
+                            <CameraSelect cameras={cameras}/>
+                        :
+                            <nav className={"col-span-1 md:col-span-3 h-full text-sm flex gap-[0.5rem] md:gap-[3rem] justify-start md:justify-center items-center"}>
+                                {cameras && cameras.map(({ camera }, index) => {
+                                   return (
+                                       <CameraImage
+                                            url={getCameraImage(camera) || "/default.svg"}
+                                            name={camera}
+                                            key={index}
+                                       />
+                                   )
+                                })}
+                            </nav>
+                        }
 
                         {/*<div className={"h-full flex justify-center items-center"}>*/}
                         {/*    <a href={authorized ? "/new-photo" : "/login"} className={"font-bold text-md lg:text-2xl px-1"}>ADMIN</a>*/}

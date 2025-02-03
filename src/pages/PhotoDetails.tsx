@@ -49,8 +49,8 @@ export default function PhotoDetails() {
 
     return (
         photo ? (
-        <div className={" w-full flex flex-row relative"}>
-            <div className={"image-box w-[60%] h-full relative z-[1] flex p-12 items-center justify-center"}>
+        <div className={"w-full flex flex-col md:flex-row relative"}>
+            <div className={"image-box w-full md:w-[60%] h-full relative z-[1] flex p-6 md:p-12 items-center justify-center"}>
                 <img
                     src={photo.url}
                     alt={photo.slug}
@@ -59,7 +59,7 @@ export default function PhotoDetails() {
                 />
             </div>
             <div
-                className={`details-box w-[40%] bg-white p-4 flex bg-no-repeat bg-cover bg-blend-difference relative items-center justify-center`}
+                className={`details-box w-full md:w-[40%] bg-white p-4 flex bg-no-repeat bg-cover bg-blend-difference relative items-center justify-center`}
                 style={{
                     backgroundImage: `url(${resizeUrl(photo.url)})`,
                 }}

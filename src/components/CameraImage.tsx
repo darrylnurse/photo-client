@@ -28,7 +28,7 @@ export default function CameraImage({ url, name }: TCameraImageProps) {
             style={{
                 "--content": name
             } as CSSProperties}
-            className={`camera-image w-[1.5rem] md:w-[3rem] lg:w-[4rem] ${currentCamera === name ? "camera-glow" : ""} w-[4rem] hover:translate-y-[-0.25rem] active:scale-[95%] cursor-pointer transition-transform`}
+            className={`camera-image w-[1rem] md:w-[3rem] lg:w-[4rem] ${currentCamera === name ? "camera-glow" : ""} w-[4rem] hover:translate-y-[-0.25rem] active:scale-[95%] cursor-pointer transition-transform`}
         />
 )
 }

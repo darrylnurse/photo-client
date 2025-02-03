@@ -3,6 +3,8 @@ import {IBasePhoto} from "../types/Types.ts";
 import PhotoCard from "../components/PhotoCard.tsx";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {CameraContext} from "../Root.tsx";
+import useWindowDimensions from "../hooks/windowDimensions.tsx";
+import {TDimensions} from "../types/Window.ts";
 
 export default function Home() : ReactNode {
 

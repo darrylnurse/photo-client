@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+import Constants from './src/constants.ts';
+
 export default {
   content: [
     "./index.html",
@@ -7,12 +10,12 @@ export default {
   theme: {
     extend: {},
     screens: {
-      'sm': '640px',
-      'md': '800px',
-      'lg': '1200px',
-      'xl': '1400px',
-      '2xl': '1550px'
-    }
+      'sm': `${Constants.SMALL_SCREEN}px`,
+      'md': `${Constants.MEDIUM_SCREEN}px`,
+      'lg': `${Constants.LARGE_SCREEN}px`,
+      'xl': `${Constants.XLARGE_SCREEN}px`,
+      '2xl': `${Constants.XXLARGE_SCREEN}px`,
+    },
   },
   plugins: [],
 }

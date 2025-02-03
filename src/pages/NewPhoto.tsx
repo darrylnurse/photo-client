@@ -157,7 +157,7 @@ export default function NewPhoto() : ReactNode {
 
     return (
         <div
-            className={"flex flex-col lg:flex-row gap-[3rem] lg:gap-[12rem] py-[5rem] lg:py-[3rem] bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
+            className={"flex flex-col px-[2rem] lg:flex-row gap-[3rem] lg:gap-[12rem] py-[5rem] lg:py-[3rem] bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
             style={{
                 backgroundImage: `url(${recentUrl})`,
             }}
