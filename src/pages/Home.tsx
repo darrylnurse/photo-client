@@ -66,10 +66,6 @@ export default function Home() : ReactNode {
         )
     }
 
-    useEffect(() => {
-        console.log(recentUrl);
-    }, []);
-
     return (
         <div
             className={"w-full relative"}
