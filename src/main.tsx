@@ -8,6 +8,7 @@ import Home from "./pages/Home.tsx";
 import PhotoDetails from "./pages/PhotoDetails.tsx";
 import GeneralError from "./pages/GeneralError.tsx";
 import AdminLogin from "./pages/AdminLogin.tsx";
+import HomeError from "./pages/HomeError.tsx";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home/>,
-                errorElement: <GeneralError/>
+                errorElement: <HomeError/>
             },
             {
                 path: "new-photo",

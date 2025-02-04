@@ -10,7 +10,6 @@ import parseCamera from "../helpers/ParseCamera.ts";
 import Fraction from 'fraction.js';
 import {AuthContext} from "../Root.tsx";
 import resizeUrl from "../helpers/ResizeUrl.ts";
-import GeneralError from "./GeneralError.tsx";
 
 export default function NewPhoto() : ReactNode {
 
@@ -18,7 +17,7 @@ export default function NewPhoto() : ReactNode {
 
     const currentDate: string = getCurrentDate();
 
-    const {authorized, setAuthorized} = useContext(AuthContext);
+    const {authorized} = useContext(AuthContext);
 
     const [photo, setPhoto] = useState<INewPhoto>({
         date_added: currentDate,
@@ -36,7 +35,7 @@ export default function NewPhoto() : ReactNode {
     const [imageFile, setFile] = useState<File>(null);
     const [fileUploaded, setFileUploaded] = useState<boolean>(false);
 
-    // lets put more of these functions in helpers
+    // let's put more of these functions in helpers
     const isImageLoaded = (file) => {
         return new Promise((resolve, reject) => {
             if (file) {
@@ -49,11 +48,6 @@ export default function NewPhoto() : ReactNode {
             }
         });
     };
-
-    const decimalToFraction = (decimal) => {
-        if(!decimal) return "1/1";
-        return `1/${100 / (Number(decimal) * 100)}`
-    }
 
     const handleFile = async (event) => {
         setPhoto((prev) => ({
@@ -170,6 +164,7 @@ export default function NewPhoto() : ReactNode {
                 backgroundImage: `url(${resizeUrl(recentUrl, "normal")})`,
             }}
         >
+
             <form className={"light-inner-shadow flex justify-center flex-col items-center bg-gray-100 rounded-md p-6 gap-4"}>
                 <img
                     alt={"uploaded-image"}
