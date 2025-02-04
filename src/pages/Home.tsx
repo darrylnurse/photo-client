@@ -49,7 +49,8 @@ export default function Home() : ReactNode {
 
     const searchRef = useRef(null);
 
-    const recentUrl = localStorage.getItem("lastVisitedPhoto");
+    const fallBackPhoto = "/mysterious-fallback.jpg";
+    const recentUrl = localStorage.getItem("lastVisitedPhoto") || fallBackPhoto;
 
     const handleImageLoad = () => {
         const loadDelay = 1000;
@@ -64,6 +65,10 @@ export default function Home() : ReactNode {
             </div>
         )
     }
+
+    useEffect(() => {
+        console.log(recentUrl);
+    }, []);
 
     return (
         <div
