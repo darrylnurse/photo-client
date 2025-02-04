@@ -34,8 +34,10 @@ export default function PhotoDetails() {
                 console.log("Error getting photos.");
             } else {
                 const data = await result.json();
+                console.log(data)
                 const fetchedPhoto : IPhoto = data["photo"][0];
                 setPhoto(fetchedPhoto);
+                console.log(fetchedPhoto)
                 localStorage.setItem("lastVisitedPhoto", fetchedPhoto.url);
             }
         } catch(error) {

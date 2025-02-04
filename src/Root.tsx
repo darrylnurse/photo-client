@@ -132,3 +132,14 @@ function Root() {
 }
 
 export default Root
+
+/*
+* imagine animation for carousel where the passed slide rotates on z axis as it moves left
+* creates a fake squashing effect
+* can create a simple 3d carousel
+* for top right area
+* also right moving arrow for first user click
+* muehehehe
+* carousel for: photo of the day, photo quotes, maybe art???
+* image zooming?????????
+* */

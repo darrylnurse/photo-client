@@ -124,7 +124,13 @@ export default function NewPhoto() : ReactNode {
                 alert("Please fill out all fields.");
                 return;
             }
-        })
+        });
+
+        const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/g;
+        if(photo.title.match(specialCharRegex)) {
+            alert("Letters, numbers and spaces only PLEASE.");
+            return;
+        }
 
         const params : RequestInit = {
             method: "POST",
