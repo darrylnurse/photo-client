@@ -10,8 +10,8 @@ const splitWords = (words : string[]) : string[] => {
 
         for (let index = 1; index < word.length; index++) {
             if (isUpperCase(word[index])) {
-                individualWords.push(word.slice(0, index));
-                individualWords.push(word.slice(index));
+                individualWords.push(word.slice(0, index).trim());
+                individualWords.push(word.slice(index).trim());
             }
         }
 
@@ -32,7 +32,11 @@ const allUniqueWords = (...words : string[]) : boolean => {
 }
 
 export default function parseCamera (makeName : string, modelName : string) : string {
-    const parsedModelName = modelName.replace(/[<>]/g, "");
+    let parsedModelName = modelName.replace(/[<>]/g, "");
+    const commaIndex = parsedModelName.indexOf(',');
+    if(commaIndex !== -1) {
+        parsedModelName = parsedModelName.slice(0, commaIndex);
+    }
     if(allUniqueWords(makeName, modelName)) {
         return makeName + ' ' + parsedModelName;
     }

@@ -7,6 +7,7 @@ import {INewPhoto, TAllowedFileTypes} from "../types/Types.ts";
 import {useNavigate} from "react-router";
 import exifr from 'exifr'
 import parseCamera from "../helpers/ParseCamera.ts";
+import Fraction from 'fraction.js';
 
 export default function NewPhoto() : ReactNode {
 
@@ -71,13 +72,14 @@ export default function NewPhoto() : ReactNode {
             if (loaded && (file.type === "image/jpeg" || file.type === "image.jpg")) {
                 exifr.parse(file)
                     .then(metadata => {
-                        console.log(metadata)
+                        console.log(metadata);
+                        const fraction = new Fraction(metadata.ExposureTime)
                         setPhoto((prev) => ({
                             ...prev,
                             camera: parseCamera(metadata.Make, metadata.Model),
                             focal_length: `${metadata.FocalLength}mm`,
                             iso: metadata.ISO,
-                            shutter_speed: `${decimalToFraction(metadata.ExposureTime)} sec`,
+                            shutter_speed: `${fraction.simplify(0.001).toFraction()} sec`,
                             aperture: `f/${metadata.FNumber}`,
                         }))
                     })

@@ -148,7 +148,7 @@ export default function Home() : ReactNode {
                     .filter((photo) => currentCamera === "All" ? true : photo.camera === currentCamera)
                     .filter((photo) => photo.title.toLowerCase().includes(searchValue))
                     .sort((photo1, photo2) => {
-                        if(sortNewest) return Number(new Date(photo2.date_taken)) - Number(new Date(photo1.date_taken));
+                        if (sortNewest) return Number(new Date(photo2.date_taken)) - Number(new Date(photo1.date_taken));
                         else return Number(new Date(photo1.date_taken)) - Number(new Date(photo2.date_taken));
                     })
                     .map((photo, index) => (
@@ -163,7 +163,17 @@ export default function Home() : ReactNode {
                         />
                     ))
                 }
+
+                <div className={"text-center tracking-[0.1rem] p-4 pt-[4rem] lg:pt-[3rem] text-white text-2xl col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 2xl:col-span-5 flex justify-center items-center font-bold "}>
+                    <a
+                        href={"https://www.instagram.com/omenclate/"}
+                        target={"_blank"}
+                        className={"hover:text-emerald-400 transition-colors"}
+                    >INSTAGRAM (DEPRECATED)</a>
+                </div>
             </div>
+
+
         </div>
     )
 }
