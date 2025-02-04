@@ -1,5 +1,5 @@
 import PhotoInput from "../components/PhotoInput.tsx";
-import {ReactNode, useState} from "react";
+import {ReactNode, useContext, useState} from "react";
 import SubmitButton from "../components/SubmitButton.tsx";
 import getCurrentDate from "../helpers/GetCurrentDate.ts";
 import s3Upload from "../helpers/UploadS3.ts";
@@ -8,12 +8,17 @@ import {useNavigate} from "react-router";
 import exifr from 'exifr'
 import parseCamera from "../helpers/ParseCamera.ts";
 import Fraction from 'fraction.js';
+import {AuthContext} from "../Root.tsx";
+import resizeUrl from "../helpers/ResizeUrl.ts";
+import GeneralError from "./GeneralError.tsx";
 
 export default function NewPhoto() : ReactNode {
 
     const navigate = useNavigate();
 
     const currentDate: string = getCurrentDate();
+
+    const {authorized, setAuthorized} = useContext(AuthContext);
 
     const [photo, setPhoto] = useState<INewPhoto>({
         date_added: currentDate,
@@ -150,11 +155,19 @@ export default function NewPhoto() : ReactNode {
     const hiddenProperties = ["date_added"];
     const recentUrl = localStorage.getItem("lastVisitedPhoto");
 
+    if(!authorized) {
+        return (
+            <div className={"h-[85vh] w-full flex tracking-[0.1rem] text-lg justify-center items-center font-bold text-white"}>
+                Get outta here!
+            </div>
+        )
+    }
+
     return (
         <div
             className={"flex flex-col px-[2rem] lg:flex-row gap-[3rem] lg:gap-[12rem] py-[5rem] lg:py-[3rem] bg-black bg-no-repeat w-full bg-cover bg-center justify-center items-center"}
             style={{
-                backgroundImage: `url(${recentUrl})`,
+                backgroundImage: `url(${resizeUrl(recentUrl, "normal")})`,
             }}
         >
             <form className={"light-inner-shadow flex justify-center flex-col items-center bg-gray-100 rounded-md p-6 gap-4"}>

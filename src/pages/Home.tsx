@@ -16,6 +16,7 @@ export default function Home() : ReactNode {
     const [fetchSuccess, setFetchSuccess] = useState<boolean>(true);
     const [sortNewest, setSortNewest] = useState<boolean>(true);
     const [dateSortedOnce, setDateSortedOnce] = useState<boolean>(false); // combust
+    const [photosLoaded, setPhotosLoaded] = useState(false);
 
     const serverUrl = import.meta.env.VITE_SERVER_URL;
     const homeUrl = serverUrl + "/photos";
@@ -49,6 +50,11 @@ export default function Home() : ReactNode {
     const searchRef = useRef(null);
 
     const recentUrl = localStorage.getItem("lastVisitedPhoto");
+
+    const handleImageLoad = () => {
+        const loadDelay = 1000;
+        setTimeout(() => setPhotosLoaded(true), loadDelay);
+    }
 
     if(!fetchSuccess) {
         return (
@@ -133,6 +139,7 @@ export default function Home() : ReactNode {
                             src={"/clockface.svg"}
                         />
                         <LazyLoadImage
+                            onLoad={handleImageLoad} // it is probably best to put this on the photo cards as a prop, but alas - ad hoc
                             src={"/pin.svg"}
                             className={`${dateSortedOnce ? (sortNewest ? "search-spin-left" : "search-spin-right") : ""} relative top-[0.5rem] pin h-[1rem] cursor-pointer hover:scale-[105%] active:scale-[95%]`}
                             alt={"change-date"}
@@ -164,13 +171,15 @@ export default function Home() : ReactNode {
                     ))
                 }
 
-                <div className={"text-center tracking-[0.1rem] p-4 pt-[4rem] lg:pt-[3rem] text-white text-2xl col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 2xl:col-span-5 flex justify-center items-center font-bold "}>
-                    <a
-                        href={"https://www.instagram.com/omenclate/"}
-                        target={"_blank"}
-                        className={"hover:text-emerald-400 transition-colors"}
-                    >INSTAGRAM (DEPRECATED)</a>
-                </div>
+                {photosLoaded &&
+                    <div className={"text-center tracking-[0.1rem] p-4 pt-[4rem] lg:pt-[3rem] text-white text-2xl col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 2xl:col-span-5 flex justify-center items-center font-bold "}>
+                        <a
+                            href={"https://www.instagram.com/omenclate/"}
+                            target={"_blank"}
+                            className={"hover:text-emerald-400 transition-colors"}
+                        >INSTAGRAM (DEPRECATED)</a>
+                    </div>
+                }
             </div>
 
 
