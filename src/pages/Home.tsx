@@ -3,6 +3,7 @@ import {IBasePhoto} from "../types/Types.ts";
 import PhotoCard from "../components/PhotoCard.tsx";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {CameraContext} from "../Root.tsx";
+import resizeUrl from "../helpers/ResizeUrl.ts";
 
 export default function Home() : ReactNode {
 
@@ -63,7 +64,7 @@ export default function Home() : ReactNode {
             className={"w-full relative"}
         >
             <LazyLoadImage
-                src={recentUrl}
+                src={resizeUrl(recentUrl, "super")}
                 alt={"main-background"}
                 className={"w-full main-background h-full absolute z-[1]"}
             />
@@ -118,7 +119,7 @@ export default function Home() : ReactNode {
 
                 <div className={"col-start-3 flex p-2 justify-end"}>
                     <button
-                        className={"outline-white sort-button p-2 flex justify-center relative items-center border-[0.3rem] rounded-[50%] aspect-square border-white"}
+                        className={"outline-white relative sort-button p-2 flex justify-center items-center  rounded-[50%] aspect-square border-white"}
                         tabIndex={0}
                         onClick={() => {
                             setDateSortedOnce(true);
@@ -126,6 +127,11 @@ export default function Home() : ReactNode {
                         }}
                         type={"button"}
                     >
+                        <LazyLoadImage
+                            className={"w-full h-full absolute"}
+                            alt={"clock-face"}
+                            src={"/clockface.svg"}
+                        />
                         <LazyLoadImage
                             src={"/pin.svg"}
                             className={`${dateSortedOnce ? (sortNewest ? "search-spin-left" : "search-spin-right") : ""} relative top-[0.5rem] pin h-[1rem] cursor-pointer hover:scale-[105%] active:scale-[95%]`}

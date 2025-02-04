@@ -6,7 +6,7 @@ import resizeUrl from "../helpers/ResizeUrl.ts";
 export default function PhotoCard({ url, title, date_taken, location, slug } : IBasePhoto) {
     const navigate = useNavigate();
 
-    const resizedUrl = resizeUrl(url);
+    const resizedUrl = resizeUrl(url, "normal");
 
     return (
         <button

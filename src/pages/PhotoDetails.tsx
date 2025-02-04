@@ -59,14 +59,14 @@ export default function PhotoDetails() {
                 />
             </div>
             <div
-                className={`details-box w-full md:w-[40%] bg-white p-4 flex bg-no-repeat bg-cover bg-blend-difference relative items-center justify-center`}
+                className={`details-box w-full md:w-[40%] bg-white p-4 flex bg-no-repeat bg-cover bg-in bg-center bg-blend-difference relative items-center justify-center`}
                 style={{
-                    backgroundImage: `url(${resizeUrl(photo.url)})`,
+                    backgroundImage: `url(${resizeUrl(photo.url, "normal")})`,
                 }}
             >
                 <div
                     style={{
-                        backdropFilter: "invert(100%) brightness(30%)"
+                        backdropFilter: "invert(100%) brightness(20%)",
                     }}
                     className={"py-8 px-12 rounded-xl text-2xl text-white"}
                 >

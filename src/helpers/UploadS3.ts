@@ -7,10 +7,10 @@ const accessKey = import.meta.env.VITE_AWS_ACCESS_KEY;
 const secretKey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
 
 const s3 = new S3Client({
-    region: region,
-    credentials: {
-        accessKeyId: accessKey,
-        secretAccessKey: secretKey,
+        region: region,
+        credentials: {
+            accessKeyId: accessKey,
+            secretAccessKey: secretKey,
     }
 });
 
@@ -28,6 +28,7 @@ export default async function s3Upload(file, fileName, fileType) {
 
     const originalKey = createKey(fileName, fileType, timeStamp);
     const resizedKey = createKey(`resized-${fileName}`, fileType, timeStamp);
+    const superResizedKey = createKey(`super-resized-${fileName}`, fileType, timeStamp);
 
     const originalPutParams = {
         Bucket: "gleam-photo-bucket",
@@ -42,9 +43,9 @@ export default async function s3Upload(file, fileName, fileType) {
         Key: originalPutParams.Key,
     });
 
-    const resizedBlob = await resizeImage(file); // Resize to 300x300 (example)
+    //resize for photo cards
+    const resizedBlob = await resizeImage(file, 4); // Resize to 300x300 (example)
 
-    // Upload resized image
     const resizedPutParams = {
         Bucket: "gleam-photo-bucket",
         Key: resizedKey,
@@ -58,6 +59,22 @@ export default async function s3Upload(file, fileName, fileType) {
         Key: resizedPutParams.Key,
     });
 
+    // resize for backgrounds
+    const superResizedBlob = await resizeImage(file, 8);
+
+    const superResizedPutParams = {
+        Bucket: "gleam-photo-bucket",
+        Key: superResizedKey,
+        Body: superResizedBlob,
+        ContentType: fileType,
+    };
+
+    const superResizedPutCommand = new PutObjectCommand(superResizedPutParams);
+    const superResizedUrlCommand = new PutObjectCommand({
+        Bucket: superResizedPutParams.Bucket,
+        Key: superResizedPutParams.Key,
+    });
+
     try {
         await s3.send(originalPutCommand);
         const originalUrl = await getSignedUrl(s3, originalUrlCommand, { expiresIn: 3600 });
@@ -65,17 +82,21 @@ export default async function s3Upload(file, fileName, fileType) {
         await s3.send(resizedPutCommand);
         const resizedUrl = await getSignedUrl(s3, resizedUrlCommand, { expiresIn: 3600 });
 
+        await s3.send(superResizedPutCommand);
+        const superResizedUrl = await getSignedUrl(s3, superResizedUrlCommand, { expiresIn: 3600 });
+
         return {
             originalUrl: originalUrl.slice(0, originalUrl.lastIndexOf("?")),
             resizedUrl: resizedUrl.slice(0, resizedUrl.lastIndexOf("?")),
+            superResizedUrl: superResizedUrl.slice(0, resizedUrl.lastIndexOf("?")),
         };
     } catch (error) {
         console.error("Upload error:", error);
-        return { originalUrl: "", resizedUrl: "" };
+        return { originalUrl: "", resizedUrl: "" , superResizedUrl: ""};
     }
 }
 
-async function resizeImage(file): Promise<Blob> {
+async function resizeImage(file, downsizeRatio): Promise<Blob> {
     return new Promise((resolve, reject) => {
         const img = new Image();
         const reader = new FileReader();
@@ -89,8 +110,8 @@ async function resizeImage(file): Promise<Blob> {
         img.onload = () => {
             const canvas = document.createElement("canvas");
 
-            const width = img.width / 3;
-            const height = img.height / 3;
+            const width = img.width / downsizeRatio;
+            const height = img.height / downsizeRatio;
 
             canvas.width = width;
             canvas.height = height;
